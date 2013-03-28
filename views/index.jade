@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  #leftSide
+    #wall
+      #messages
+      input(type="text", id="inputmsg")
+      button(id="send") Send
+    #manymsgs     
+      button(id="sendMany") Send many messages
+      p(id="inputLblOne") Msgs per Blast:
+      input(type="text", id="inputOne")
+      p(id="inputLblTwo") Interval(ms):
+      input(type="text", id="inputTwo")
+      p(id="inputLblTree") Blast Count:
+      input(type="text", id="inputTree")
+    #infomsgs
+    #websocket
+  #rightSide
+    #logs
+    #info
+      br
+      b To run test:
+      br
+      p * Select the connection you want(WS/WSS) and wait for connect.
+      p * Select the number of msgs per blast.
+      p * Select the interval between blasts (ms).
+      p * Select the number of blasts.
+      p * Click 'Send many messages' to run test.
+

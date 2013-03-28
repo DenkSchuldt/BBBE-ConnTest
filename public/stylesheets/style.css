@@ -1,0 +1,121 @@
+body {
+  height: 100%;
+  width: 100%;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;  
+}
+
+a{color: #00B7FF;}
+
+/* Left side:
+-------------------------------------------------------------------*/
+
+ #wall{
+   width: 75%;
+   height: 70%;
+   background-color: blue;
+   position: absolute;
+   top: 0;
+   left: 0;
+ }
+
+ #messages{
+   width: 98%;
+   height: 88%;
+   background-color: red;
+   position: absolute;
+   margin-left: 1%;
+   margin-top: 1%; 
+ }
+
+ #inputmsg{
+   width: 30%;
+   height: 7%;
+   position: absolute;
+   left: 1%;
+   top: 91%;
+ }
+
+ #send{
+   width: 10%;
+   height: 8%;
+   position: absolute;
+   left: 32%;
+   top: 91%;
+ }
+
+ /* Send many messages */
+
+ #manymsgs{
+   width: 75%;
+   height: 10%;
+   top: 70%;
+   position: absolute;
+   background-color: gray;
+ }
+ 
+ #sendMany{
+   width: 30%;
+   height: 70%;
+   left: 1%;
+   top: 15%;
+   position: relative;
+   float: left;
+ }
+
+ #inputOne, #inputTwo, #inputTree{
+   float: left;
+   position: relative;
+   width: 7%;
+   top: 30%;
+   padding-left: 1%;
+ }
+
+ #inputLblOne, #inputLblTwo, #inputLblTree{
+   float: left;
+   position: relative;
+   top: 35%;
+   padding-left: 1.5%;
+ }
+
+#infomsgs{
+  width: 75%;
+  height: 10%;
+  top: 80%;
+  position: absolute;
+  background-color: lightgray;
+}
+
+#websocket{
+  weith: 75%;
+  height: 10%;
+  top: 90%;
+  position: absolute;
+  background-color: darkgray;
+}
+
+#rightSide{
+  width: 25%;
+  height: 100%;
+  background-color: green;
+  top: 0;
+  left: 75%;
+  position: absolute;
+}
+
+#logs{
+  width: 96%;
+  height: 58%;
+  top: 1%;
+  left: 2%;
+  background-color: white;
+  position: absolute;
+}
+
+#info{
+  width: 96%;
+  height: 38%;
+  top: 61%;
+  left: 2%;
+  background-color: white;
+  position: absolute;
+}
