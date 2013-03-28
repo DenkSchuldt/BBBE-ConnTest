@@ -1,0 +1,8 @@
+[user]
+    name = Denny Schuldt
+    email = dschuldt@espol.edu.ec
+[color]
+    status = auto
+    branch = auto
+    diff = auto
+    interactive = auto
