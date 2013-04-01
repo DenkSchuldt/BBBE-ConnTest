@@ -12,27 +12,47 @@ a{color: #00B7FF;}
  #wall{
    width: 75%;
    height: 70%;
-   background-color: blue;
+   background-color: gray;
    position: absolute;
    top: 0;
    left: 0;
  }
-
+ 
  #messages{
    width: 98%;
    height: 88%;
-   background-color: red;
+   top: 2%;
+   left: 1%;
    position: absolute;
-   margin-left: 1%;
-   margin-top: 1%; 
+   background-color: white;
+ }
+
+ #msgTitle{
+   width: 98%;
+   height: 6.5%;
+   padding-left: 2%;
+   padding-top: 0.5%;
+   position: absolute;
+   border-bottom: 1px solid;
+ }
+
+ #msgInfo{
+   width: 96%;
+   height: 91%;
+   top: 7%;
+   padding-left: 4%;
+   padding-top: 1%;
+   position: absolute;
+   overflow-x: hidden;
  }
 
  #inputmsg{
-   width: 30%;
+   width: 28%;
    height: 7%;
    position: absolute;
    left: 1%;
    top: 91%;
+   padding-left: 2%;
  }
 
  #send{
@@ -43,14 +63,14 @@ a{color: #00B7FF;}
    top: 91%;
  }
 
- /* Send many messages */
+/* Send many messages */
 
  #manymsgs{
    width: 75%;
    height: 10%;
    top: 70%;
    position: absolute;
-   background-color: gray;
+   background-color: lightgray;
  }
  
  #sendMany{
@@ -77,45 +97,113 @@ a{color: #00B7FF;}
    padding-left: 1.5%;
  }
 
-#infomsgs{
-  width: 75%;
-  height: 10%;
-  top: 80%;
-  position: absolute;
-  background-color: lightgray;
-}
+/* Information about received and sent msgs */
 
-#websocket{
-  weith: 75%;
-  height: 10%;
-  top: 90%;
-  position: absolute;
-  background-color: darkgray;
-}
+ #infomsgs{
+   width: 75%;
+   height: 10%;
+   top: 80%;
+   position: absolute;
+   background-color: gray;
+ }
+
+ #lblSent, #lblRcvt{
+   float: left;
+   position: relative;
+   left: 2%;
+   top: 35%;
+   padding-right: 3%;
+ }
+
+ #msgSent,  #msgRcvt{
+   float: left;
+   position: relative;
+   top: 35%;
+   width: 10%;   
+ }
+
+ /* Options: WSS or WS */
+
+ #websocket{
+   width: 75%;
+   height: 10%;
+   top: 90%;
+   position: absolute;
+   background-color: lightgray;
+ }
+
+ #lblWSS, #lblWS{
+   float: left;
+   position: relative;
+   left: 2%;
+   top: 42%;
+ }
+
+ #rdWSS, #rdWS{
+   float: left;
+   position: relative;
+   left: 2%;
+   top: 45%;
+ }
+
+ #wss, #ws{
+   float: left;
+   position: relative;
+   top: 25%;
+   left: 2%;
+   margin-right: 3%;
+ }
 
 #rightSide{
   width: 25%;
   height: 100%;
-  background-color: green;
+  background-color: darkgray;
   top: 0;
   left: 75%;
   position: absolute;
 }
 
-#logs{
-  width: 96%;
-  height: 58%;
-  top: 1%;
-  left: 2%;
-  background-color: white;
-  position: absolute;
-}
+/* Logs info */
+
+ #logs{
+   width: 96%;
+   height: 58%;
+   top: 1%;
+   left: 2%;
+   background-color: white;
+   position: absolute;
+ }
+
+ #logsTitle{
+   width: 98%;
+   height: 8.5%;
+   padding-left: 2%;
+   padding-top: 1.5%;
+   position: absolute;
+   border-bottom: 1px solid;
+
+ }
+ 
+ #logsInfo{
+   color: red;
+   width: 91%;
+   height: 85%;
+   top: 10%;
+   padding-left: 4%;
+   padding-right: 5%;
+   padding-top: 5%;
+   position: absolute;
+   overflow-x: hidden;
+ }
 
 #info{
-  width: 96%;
-  height: 38%;
+  width: 86%;
+  height: 34%;
   top: 61%;
   left: 2%;
   background-color: white;
   position: absolute;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 8%;
 }

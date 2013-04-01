@@ -4,10 +4,14 @@ block content
   #leftSide
     #wall
       #messages
+        #msgTitle
+          h2 Messages received:
+          br
+        #msgInfo
       input(type="text", id="inputmsg")
-      button(id="send") Send
-    #manymsgs     
-      button(id="sendMany") Send many messages
+      button(id="send", onClick="sendMsgs()") Send
+    #manymsgs
+      button(id="sendMany", onClick="sendMany()") Send many messages
       p(id="inputLblOne") Msgs per Blast:
       input(type="text", id="inputOne")
       p(id="inputLblTwo") Interval(ms):
@@ -15,14 +19,27 @@ block content
       p(id="inputLblTree") Blast Count:
       input(type="text", id="inputTree")
     #infomsgs
+      label(id="lblSent") Msgs sent:
+      input(type="text", disabled="true", "id="msgSent") '0'
+      label(id="lblRcvt") Msgs rcvt:
+      input(type="text", disabled="true", id="msgRcvt") '0'
     #websocket
+      p(id="lblWSS") Websocket Secure (WSS)
+      input(type="radio", id="rdWSS", name="group", onClick="wss()")
+      textarea(disabled="true", id="wss") Direccion uno
+      p(id="lblWS") Websocket (WS)
+      input(type="radio", id="rdWS", name="group", onClick="ws()")
+      textarea(disabled="true", id="ws") Direccion dos
   #rightSide
     #logs
+      #logsTitle
+        h2 Logs:
+        br
+      #logsInfo
     #info
-      br
       b To run test:
       br
-      p * Select the connection you want(WS/WSS) and wait for connect.
+      p * Select the connection you want(WSS/WS) and wait for connect.
       p * Select the number of msgs per blast.
       p * Select the interval between blasts (ms).
       p * Select the number of blasts.

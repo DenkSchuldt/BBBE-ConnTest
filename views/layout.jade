@@ -4,12 +4,49 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/reset.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(text="javascript", src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
     script(text="javascript", src="/socket.io/socket.io.js")
     script(text="javascript")
-      var socket = io.connect('http://192.168.1.182:8080');
+      var socket = io.connect('http://192.168.1.182:8080');      
+      var sent = 0;
+      var rcvt = 0;
       socket.on('news', function(data){
         console.log(data);
+        $('#logs').append(data);
         socket.emit('my other event', {my: 'data'});
       });
+      function sendMsgs(){
+        sent++;
+        $('#msgSent').val(''+sent);
+        $('#msgInfo').append('<h4>' + $('#inputmsg').val() + '</h4>');
+        rcvt++;
+        $('#msgRcvt').val(''+rcvt);
+      }
+      function sendMany(){
+        var number = parseInt($('#inputOne').val());
+        var interval = parseInt($('#inputTwo').val());
+        times = parseInt($('#inputTree').val());
+        var waiting = false;
+        while(times){
+          times--;
+          setTimeout(
+            function(){              
+              for(var i=0; i<number; i++){
+                sent++;                
+                $('#msgSent').val(''+sent);
+                $('#msgInfo').append('<h4>' + $('#inputmsg').val() + '</h4>');
+                rcvt++;
+                $('#msgRcvt').val(''+rcvt);
+              }
+              $('#msgInfo').append('<h3 style="color:blue;">' + ' ---> Waiting...' + '</h3>');              
+            }, interval);
+        }
+      }
+      function wss(){
+        $('#logsInfo').append('-connect with WSS- <br/>');
+      }
+      function ws(){
+        $('#logsInfo').append('-connect with WS- <br/>');
+      }
   body
     block content
