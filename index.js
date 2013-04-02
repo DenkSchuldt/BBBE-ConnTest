@@ -34,10 +34,12 @@ var server = http.createServer(app)
 
 server.listen(8080);
 
+
 io.sockets.on('connection', function(socket){
   socket.emit('news',"{Websocket: connection established}");
+  console.log("   ---> WS Connected.");
   socket.on('disconnect',function(){
-    console.log("WS Disconnected");
+    console.log("   ---> WS Disconnected.");
   });
 });
 

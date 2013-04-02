@@ -10,6 +10,9 @@ html
 
       var sent = 0;
       var rcvt = 0;
+      var active = false;
+      var disconnected = false;
+      var socket = null;
 
       function sendMsgs(){
         if($("input[name=group]:checked").val()){
@@ -31,7 +34,7 @@ html
         while(times){
           times--;
           setTimeout(
-            function(){              
+            function(){
               for(var i=0; i<number; i++){
                 sent++;                
                 $('#msgSent').val(''+sent);
@@ -39,20 +42,43 @@ html
                 rcvt++;
                 $('#msgRcvt').val(''+rcvt);
               }
-              $('#msgInfo').append('<h3 style="color:blue;">' + ' ---> Waiting...' + '</h3>');              
+              $('#msgInfo').append('<h3 style="color:blue;">' + ' ---> Waiting...' + '</h3>');
             }, interval);
         }
       }
 
       function wss(){
-        $('#logsInfo').append('-connect with WSS- <br/>');
+        if(active){
+          socket.disconnect();
+          disconnected = true;
+          console.log("WS disconnected...");
+          console.log("Connecting using WSS...");
+        }
+        if(disconnected)
+          socket.socket.connect();  //I'll have to change this.. cannot connect again with the same ws.
+        else
+          socket = io.connect('https://192.168.1.182:8080',{secure: true}); //Not working...
+        active = true;
+        console.log("Using WSS...");
+        $('#logsInfo').append('-Connect using WSS- <br/>');        
       }
 
       function ws(){
-        var socket = io.connect('http://192.168.1.182:8080');
+        if(active){
+          socket.disconnect();
+          disconnected = true;
+          console.log("WSS disconnected...");
+          console.log("Connecting using WSS...");
+        }
+        if(disconnected)
+          socket.socket.connect();
+        else
+          socket = io.connect('ws://192.168.1.182:8080');
         socket.on('news',function(data){
+          console.log("   ---> WS Connected.");
+          active = true;
           $('#logsInfo').append(data+'<br/>');
-        });        
+        });
       }
   body
     block content
