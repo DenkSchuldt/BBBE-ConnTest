@@ -35,9 +35,9 @@ var server = http.createServer(app)
 server.listen(8080);
 
 io.sockets.on('connection', function(socket){
-  socket.emit('news', {Websocket: "connection established"});
-  socket.on('my other event', function(data){
-    console.log(data);
+  socket.emit('news',"{Websocket: connection established}");
+  socket.on('disconnect',function(){
+    console.log("WS Disconnected");
   });
 });
 
