@@ -1,19 +1,22 @@
+
 doctype 5
 html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/reset.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(text="javascript", src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
+    script(text="javascript", src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
     script(text="javascript", src="/socket.io/socket.io.js")
     script(text="javascript")
 
       var sent = 0;
       var rcvt = 0;
-      var active = false;
-      var disconnected = false;
-      var socket = null;
+      var socketWS = null;
+      var socketWSS = null;
+      var centinelWS = false;
+      var centinelWSS = false;
 
+      /*--------------------*/
       function sendMsgs(){
         if($("input[name=group]:checked").val()){
           sent++;
@@ -26,6 +29,7 @@ html
         }
       }
 
+      /*--------------------*/
       function sendMany(){
         var number = parseInt($('#inputOne').val());
         var interval = parseInt($('#inputTwo').val());
@@ -46,39 +50,43 @@ html
             }, interval);
         }
       }
-
+   
+      /*--------------------*/
       function wss(){
-        if(active){
-          socket.disconnect();
-          disconnected = true;
-          console.log("WS disconnected...");
-          console.log("Connecting using WSS...");
+        if(socketWS){
+          socketWS.disconnect();
+          console.log("   <--> WS disconnected.");
+          console.log("   <--> Connecting using WSS.");
         }
-        if(disconnected)
-          socket.socket.connect();  //I'll have to change this.. cannot connect again with the same ws.
-        else
-          socket = io.connect('https://192.168.1.182:8080',{secure: true}); //Not working...
-        active = true;
-        console.log("Using WSS...");
-        $('#logsInfo').append('-Connect using WSS- <br/>');        
+        if(centinelWSS){
+          socketWSS.socket.connect();
+        }else{
+          socketWSS = io.connect('wss://192.168.1.182:9090/',{secure: true, port: '9090'});
+        }
+        socketWSS.on('newsWSS', function(data){
+          $('#logsInfo').append(data+'<br/>');
+          console.log(data);
+        });
+        centinelWSS = true;
       }
 
+      /*--------------------*/
       function ws(){
-        if(active){
-          socket.disconnect();
-          disconnected = true;
-          console.log("WSS disconnected...");
-          console.log("Connecting using WSS...");
+        if(socketWSS){
+          socketWSS.disconnect();
+          console.log("   <--> WSS disconnected.");
+          console.log("   <--> Connecting using WS.");
         }
-        if(disconnected)
-          socket.socket.connect();
-        else
-          socket = io.connect('ws://192.168.1.182:8080');
-        socket.on('news',function(data){
-          console.log("   ---> WS Connected.");
-          active = true;
+        if(centinelWS){
+          socketWS.socket.connect();
+        }else{
+          socketWS = io.connect('ws://192.168.1.182:8080/', {secure: false, port: '8080'});
+        }
+        socketWS.on('newsWS', function(data){
           $('#logsInfo').append(data+'<br/>');
+          console.log(data);
         });
+        centinelWS = true;
       }
   body
     block content

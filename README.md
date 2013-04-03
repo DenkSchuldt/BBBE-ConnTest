@@ -1,4 +1,6 @@
 ConnTest
 ========
 
-Minimal Websocket connection test using Node.js and HTML5
+Minimal Websocket connection test using Node.js and HTML5.
+
+
