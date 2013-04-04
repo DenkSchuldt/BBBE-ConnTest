@@ -19,35 +19,75 @@ html
       /*--------------------*/
       function sendMsgs(){
         if($("input[name=group]:checked").val()){
+          var msg = $('#inputmsg').val();
           sent++;
           $('#msgSent').val(''+sent);
-          $('#msgInfo').append('<h4>' + $('#inputmsg').val() + '</h4>');
-          rcvt++;
-          $('#msgRcvt').val(''+rcvt);
+          if($('#rdWS').is(':checked')){
+            socketWS.emit('send',msg);
+            socketWS.on('message', function(msg){
+              $('#msgInfo').append('<h4>' + msg + '</h4>');
+              rcvt++;
+              $('#msgRcvt').val(''+rcvt);
+            });
+          }else if($('#rdWSS').is(':checked')){
+            socketWSS.emit('send',msg);
+            socketWSS.on('message', function(msg){
+              $('#msgInfo').append('<h4>' + msg + '</h4>');
+              rcvt++;
+              $('#msgRcvt').val(''+rcvt);
+            });
+          }
         }else{
-          alert("You must select a connection: WS or WSS");
+          alert("You must select a connection to run test.");
         }
       }
 
       /*--------------------*/
       function sendMany(){
-        var number = parseInt($('#inputOne').val());
-        var interval = parseInt($('#inputTwo').val());
-        times = parseInt($('#inputTree').val());
-        var waiting = false;
-        while(times){
-          times--;
-          setTimeout(
-            function(){
-              for(var i=0; i<number; i++){
-                sent++;                
-                $('#msgSent').val(''+sent);
-                $('#msgInfo').append('<h4>' + $('#inputmsg').val() + '</h4>');
-                rcvt++;
-                $('#msgRcvt').val(''+rcvt);
-              }
-              $('#msgInfo').append('<h3 style="color:blue;">' + ' ---> Waiting...' + '</h3>');
-            }, interval);
+        if($("input[name=group]:checked").val()){
+          if(($('#inputOne').val() == "")||(isNaN($('#inputOne').val()))){
+            alert('Msgs per Blast not specified.');
+          }else if(($('#inputTwo').val() == "")||(isNaN($('#inputTwo').val()))){
+            alert('Interval not specified.');
+          }else if(($('#inputTree').val() == "")||(isNaN($('#inputTree').val()))){
+            alert('Blast Count not specified.');
+          }else{
+            var msg = $('#inputmsg').val();
+            var number = parseInt($('#inputOne').val());
+            var interval = parseInt($('#inputTwo').val());
+            times = parseInt($('#inputTree').val());
+            var waiting = false;
+            while(times){              
+              setTimeout(
+                function(){
+                  for(var i=0; i<number; i++){
+                    if($('#rdWS').is(':checked')){
+                      socketWS.emit('send',msg);
+                      sent++;
+                      $('#msgSent').val(''+sent);
+                      socketWS.on('message', function(msg){
+                        $('#msgInfo').append('<h4>' + msg + '</h4>');
+                        rcvt++;
+                        $('#msgRcvt').val(''+rcvt);
+                      });
+                    }else if($('#rdWSS').is(':checked')){
+                      socketWSS.emit('send',msg);
+                      sent++;
+                      $('#msgSent').val(''+sent);
+                      socketWSS.on('message', function(msg){
+                        $('#msgInfo').append('<h4>' + msg + '</h4>');
+                        rcvt++;
+                        $('#msgRcvt').val(''+rcvt);
+                      });
+                    }
+                  }
+                $('#msgInfo').append('<h3 style="color:blue;">' + ' ---> Waiting...' + '</h3>');
+              },interval);
+              times--;
+            }
+          }
+        }else{
+          alert("You must select a connection to run test.");
         }
       }
    
@@ -60,13 +100,13 @@ html
         }
         if(centinelWSS){
           socketWSS.socket.connect();
+          socketWSS.emit('reconnect');
+          $('#logsInfo').append('{Websocket secure: connection restablished}<br/>');
         }else{
           socketWSS = io.connect('wss://192.168.1.182:9090/',{secure: true, port: '9090'});
+          socketWSS.emit('connect');
+          $('#logsInfo').append('{Websocket secure: connection established}<br/>');
         }
-        socketWSS.on('newsWSS', function(data){
-          $('#logsInfo').append(data+'<br/>');
-          console.log(data);
-        });
         centinelWSS = true;
       }
 
@@ -79,13 +119,13 @@ html
         }
         if(centinelWS){
           socketWS.socket.connect();
+          socketWS.emit('reconnect');
+          $('#logsInfo').append('{Websocket: connection restablished}<br/>');
         }else{
           socketWS = io.connect('ws://192.168.1.182:8080/', {secure: false, port: '8080'});
+          socketWS.emit('connect');
+          $('#logsInfo').append('{Websocket: connection established}<br/>');
         }
-        socketWS.on('newsWS', function(data){
-          $('#logsInfo').append(data+'<br/>');
-          console.log(data);
-        });
         centinelWS = true;
       }
   body

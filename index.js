@@ -44,13 +44,18 @@ var httpServer = http.createServer(app.handle.bind(app)).listen(8080);
 var httpIo = require('socket.io').listen(httpServer);
 
 httpIo.sockets.on('connection', function(socket){
-  socket.emit('newsWS',"{Websocket: connection established}");
-  console.log("   ---> WS Connected :::");
-  socket.on('connect', function(){});
-  socket.on('message', function(data){});
+  socket.on('connect', function(){
+    console.log('   ---> WS Connected (server message)');  
+  });
+  socket.on('reconnect',function(){
+    console.log('   ---> WS Reconnected (server message)');
+  });
+  socket.on('send', function(message){
+    httpIo.sockets.send(message);
+  });
   socket.on('disconnect',function(){
-    console.log("   ---> WS Disconnected :::");
-    httpServer.close();
+    console.log('   ---> WS Disconnected (server message)');
+    //httpServer.close();
   });
 });
 
@@ -61,13 +66,19 @@ var httpsServer = https.createServer(options,app.handle.bind(app)).listen(9090);
 var httpsIo = require('socket.io').listen(httpsServer);
 
 httpsIo.sockets.on('connection', function(socket){
-  socket.emit('newsWSS',"{Websocket secure: connection established}");
-  console.log("   ---> WSS Connected :::");
-  socket.on('connect', function(){});
-  socket.on('message', function(data){});
+  socket.on('connect', function(){
+    console.log('   ---> WSS Connected (server message)');
+  });
+  socket.on('reconnect',function(){
+    console.log('   ---> WSS Reconnected (server message)');
+  });
+  socket.on('send', function(message){
+    httpsIo.sockets.send(message);
+  });
   socket.on('disconnect',function(){
-    console.log("   ---> WSS Disconnected :::");
-    httpsServer.close();
+    console.log('   ---> WSS Disconnected (server message)');
+    //httpsServer.close();
   });
 });
+
 
