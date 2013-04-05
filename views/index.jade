@@ -8,6 +8,7 @@ block content
           h2 Messages received:
           br
         #msgInfo
+      h3 Message: 
       input(type="text", id="inputmsg")
       button(id="send", onClick="sendMsgs()") Send
     #manymsgs
@@ -16,13 +17,13 @@ block content
       input(type="text", id="inputOne")
       p(id="inputLblTwo") Interval(ms):
       input(type="text", id="inputTwo")
-      p(id="inputLblTree") Blast Count:
+      p(id="inputLblTree") Blasts:
       input(type="text", id="inputTree")
     #infomsgs
       label(id="lblSent") Msgs sent:
-      input(type="text", disabled="true", "id="msgSent") '0'
+      input(type="text", disabled="true", "id="msgSent", value='0')
       label(id="lblRcvt") Msgs rcvt:
-      input(type="text", disabled="true", id="msgRcvt") '0'
+      input(type="text", disabled="true", id="msgRcvt", value='0')
     #websocket
       p(id="lblWSS") Websocket Secure (WSS)
       input(type="radio", id="rdWSS", name="group", onClick="wss()")
@@ -37,11 +38,15 @@ block content
         br
       #logsInfo
     #info
-      b To run test:
+      h2 To run test:
       br
-      p * Select the connection you want(WSS/WS) and wait for connect.
+      p -> Enter the message you want to send.
+      p -> Select the connection you want(WSS/WS) and wait for connect.
+      p -> For a single message: 
+      p * click "Send".
+      p -> For multiple messages:
       p * Select the number of msgs per blast.
       p * Select the interval between blasts (ms).
       p * Select the number of blasts.
-      p * Click 'Send many messages' to run test.
+      p * Click "Send many messages" to run test.
 
