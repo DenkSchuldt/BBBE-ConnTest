@@ -3,6 +3,9 @@
 \.classpath
 \.project
 \.settings
+\.authentication
+\.node_modules
 \.metadata/
 Servers/
 target/
+
