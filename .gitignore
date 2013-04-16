@@ -8,4 +8,9 @@
 \.metadata/
 Servers/
 target/
+<<<<<<< HEAD
 
+=======
+\.authentication
+\.node_modules
+>>>>>>> 3616d6bfc2605e6d420ac4e656e309c715a8359d
