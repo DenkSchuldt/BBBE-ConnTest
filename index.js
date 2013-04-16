@@ -40,20 +40,21 @@ app.get('/users', user.list);
 
 /*WS Connection...............................
 ..............................................*/
-var httpServer = http.createServer(app.handle.bind(app)).listen(8080);
-var httpIo = require('socket.io').listen(httpServer);
+var httpServer = http.createServer(app.handle.bind(app)).listen(1111);
+var httpIo = require('socket.io').listen(httpServer,{flashPolicyServer: true,transports:['flashsocket', 'websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']});
 
-httpIo.sockets.on('connection', function(socket){
+httpIo.sockets.on('connection', function(socket){  
   socket.on('connect', function(){
     console.log('   ---> WS Connected (server message)');  
-    socket.emit('established',"{Websocket: connection establisehd}");
+    socket.emit('established',"{Websocket: connection established}");	
   });
-  socket.on('reconnect',function(){
+  socket.on('reconnect',function(){    
     console.log('   ---> WS Reconnected (server message)');
-    socket.emit('restablished',"{Websocket: connection restablisehd}");
+    socket.emit('restablished',"{Websocket: connection restablished}");	
   });
   socket.on('send', function(message){
-    httpIo.sockets.send(message);
+    console.log('   ---> Sending a message (server message)');
+    httpIo.sockets.send(message);	
   });
   socket.on('disconnect',function(){
     console.log('   ---> WS Disconnected (server message)');
@@ -65,7 +66,7 @@ httpIo.sockets.on('connection', function(socket){
 
 /*WSS Connection..............................
 ..............................................*/
-var httpsServer = https.createServer(options,app.handle.bind(app)).listen(9090);
+var httpsServer = https.createServer(options,app.handle.bind(app)).listen(1212);
 var httpsIo = require('socket.io').listen(httpsServer);
 
 httpsIo.sockets.on('connection', function(socket){
