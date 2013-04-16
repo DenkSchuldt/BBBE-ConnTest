@@ -6,3 +6,5 @@
 \.metadata/
 Servers/
 target/
+\.authentication
+\.node_modules
