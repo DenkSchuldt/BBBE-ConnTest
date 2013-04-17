@@ -3,14 +3,14 @@
  * Module dependencies.
  */
 
+var user = require('./routes/user');
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var https = require('https');
 var http = require('http');
 var path = require('path');
-var app = express();
 var fs = require('fs');
+var app = express();
 
 var options = {
   key: fs.readFileSync('./authentication/server.key'),
@@ -40,8 +40,8 @@ app.get('/users', user.list);
 
 /*WS Connection...............................
 ..............................................*/
-var httpServer = http.createServer(app.handle.bind(app)).listen(1111);
-var httpIo = require('socket.io').listen(httpServer,{flashPolicyServer: true,transports:['flashsocket', 'websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']});
+var httpServer = http.createServer(app.handle.bind(app)).listen(7171);
+var httpIo = require('socket.io').listen(httpServer);
 
 httpIo.sockets.on('connection', function(socket){  
   socket.on('connect', function(){
@@ -66,17 +66,18 @@ httpIo.sockets.on('connection', function(socket){
 
 /*WSS Connection..............................
 ..............................................*/
-var httpsServer = https.createServer(options,app.handle.bind(app)).listen(1212);
-var httpsIo = require('socket.io').listen(httpsServer);
+
+var httpsServer = https.createServer(options,app.handle.bind(app)).listen(7272);
+var httpsIo = require('socket.io').listen(httpsServer,{transports:['flashsocket', 'websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']});
 
 httpsIo.sockets.on('connection', function(socket){
   socket.on('connect', function(){
     console.log('   ---> WSS Connected (server message)');
-    socket.emit('established', "{Websocket secure: connection establisehd}");
+    socket.emit('established', "{Websocket secure: connection established}");
   });
   socket.on('reconnect',function(){
     console.log('   ---> WSS Reconnected (server message)');
-    socket.emit('restablished',"{Websocket secure: connection restablisehd}");
+    socket.emit('restablished',"{Websocket secure: connection restablished}");
   });
   socket.on('send', function(message){
     httpsIo.sockets.send(message);
@@ -87,5 +88,3 @@ httpsIo.sockets.on('connection', function(socket){
     //httpsServer.close();
   });
 });
-
-
