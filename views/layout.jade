@@ -99,41 +99,10 @@ html
 
       /*--------------------*/
       /*--------------------*/
-      function wss(){
-        contWSS = 0;
-        if(!centinelWSS){
-          socketWSS = io.connect('wss://192.168.1.182:1212/',{secure: true, port: '1212'});
-          socketWSS.emit('connect');
-        }
-        if(!WSSRegistered){
-          socketWSS.on('established', function(data){
-            $('#logsInfo').append(data+'<br/>');
-          });
-          socketWSS.on('restablished', function(data){
-            $('#logsInfo').append(data+'<br/>');            
-          });
-          socketWSS.on('disconnected', function(data){
-            $('#logsInfo').append('{Websocket secure: disconnected}<br/>');
-          });
-          WSSRegistered = true;
-        }
-        if(socketWS){
-          socketWS.disconnect();
-          reset();
-        }
-        if(centinelWSS){
-          socketWSS.socket.connect();
-          socketWSS.emit('reconnect');
-        }
-        centinelWSS = true;
-      }
-
-      /*--------------------*/
-      /*--------------------*/
-      function ws(){
+      function ws(){                 
         contWS = 0;
         if(!centinelWS){
-          socketWS = io.connect('ws://192.168.1.182:1111/', {secure: false, port: '1111'});
+          socketWS = io.connect($('#ws').val(), {secure: false, port: '7171'});
           socketWS.emit('connect');
         }
         if(!WSRegistered){
@@ -158,13 +127,46 @@ html
         }
         centinelWS = true;
       }
-
+  
+      /*--------------------*/
+      /*--------------------*/
+      function wss(){        
+        contWSS = 0;
+        if(!centinelWSS){
+          socketWSS = io.connect($('#wss').val(),{secure: true, port: '7272'});
+          socketWSS.emit('connect');
+        }
+        if(!WSSRegistered){
+          socketWSS.on('established', function(data){
+            $('#logsInfo').append(data+'<br/>');
+          });
+          socketWSS.on('restablished', function(data){
+            $('#logsInfo').append(data+'<br/>');            
+          });
+          socketWSS.on('disconnected', function(data){
+            $('#logsInfo').append('{Websocket secure: disconnected}<br/>');
+          });
+          WSSRegistered = true;
+        }
+        if(socketWS){
+          socketWS.disconnect();
+          reset();
+        }
+        if(centinelWSS){
+          socketWSS.socket.connect();
+          socketWSS.emit('reconnect');
+        }
+        centinelWSS = true;
+      }
+  
+      /*--------------------*/	 
+      /*--------------------*/
       function WSMessage(){
         socketWS.on('message', function(message){
           appendMessage(message);
         });
       }
-     
+ 
       /*--------------------*/
       /*--------------------*/
       function WSSMessage(){

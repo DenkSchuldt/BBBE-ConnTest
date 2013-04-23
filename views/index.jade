@@ -14,23 +14,23 @@ block content
     #manymsgs
       button(id="sendMany", onClick="sendMany()") Send many messages
       p(id="inputLblOne") Msgs per Blast:
-      input(type="text", id="inputOne")
+      input(type="text", id="inputOne", value="20")
       p(id="inputLblTwo") Interval(ms):
-      input(type="text", id="inputTwo")
+      input(type="text", id="inputTwo", value="1000")
       p(id="inputLblTree") Blasts:
-      input(type="text", id="inputTree")
+      input(type="text", id="inputTree", value="10")
     #infomsgs
       label(id="lblSent") Msgs sent:
       input(type="text", disabled="true", "id="msgSent", value='0')
       label(id="lblRcvt") Msgs rcvt:
       input(type="text", disabled="true", id="msgRcvt", value='0')
     #websocket
-      p(id="lblWSS") Websocket Secure (WSS)
-      input(type="radio", id="rdWSS", name="group", onClick="wss()")
-      textarea(disabled="true", id="wss") 'wss://192.168.1.182:9090'
       p(id="lblWS") Websocket (WS)
       input(type="radio", id="rdWS", name="group", onClick="ws()")
-      textarea(disabled="true", id="ws") 'ws://192.168.1.182:8080'
+      textarea(id="ws") ws://url...
+      p(id="lblWSS") Websocket Secure (WSS)
+      input(type="radio", id="rdWSS", name="group", onClick="wss()")
+      textarea(id="wss") wss://url...
   #rightSide
     #logs
       #logsTitle
