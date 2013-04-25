@@ -99,10 +99,10 @@ html
 
       /*--------------------*/
       /*--------------------*/
-      function ws(){                 
+      function ws(wsUrl){
         contWS = 0;
         if(!centinelWS){
-          socketWS = io.connect($('#ws').val(), {secure: false, port: '7171'});
+          socketWS = io.connect(wsUrl, {secure: false, port: '7171'});
           socketWS.emit('connect');
         }
         if(!WSRegistered){
@@ -130,10 +130,10 @@ html
   
       /*--------------------*/
       /*--------------------*/
-      function wss(){        
+      function wss(wssUrl){        
         contWSS = 0;
         if(!centinelWSS){
-          socketWSS = io.connect($('#wss').val(),{secure: true, port: '7272'});
+          socketWSS = io.connect(wssUrl,{secure: true, port: '7272'});
           socketWSS.emit('connect');
         }
         if(!WSSRegistered){
