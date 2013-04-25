@@ -58,7 +58,7 @@ httpIo.sockets.on('connection', function(socket){
   });
   socket.on('disconnect',function(){
     console.log('   ---> WS Disconnected (server message)');
-    socket.emit('disconnected', "{Websocket: disconnected}");
+    socket.emit('disconnect');
     //httpServer.close();
   });
 });
@@ -83,7 +83,7 @@ httpsIo.sockets.on('connection', function(socket){
   });
   socket.on('disconnect',function(){
     console.log('   ---> WSS Disconnected (server message)');
-    socket.emit('disconnected', "{Websocket secure: disconnected}");
+    socket.emit('disconnect');
     //httpsServer.close();
   });
 });
